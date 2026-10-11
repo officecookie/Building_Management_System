@@ -30,35 +30,143 @@ public class mainJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        addBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        editBtn = new javax.swing.JButton();
+        tallestBtn = new javax.swing.JButton();
+        showAllBtn = new javax.swing.JButton();
+        above50Btn = new javax.swing.JButton();
+        sortBtn = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        buildingList = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        outputArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Буркеев_Дмитрий/Варламова_Елизавета_25ВП2");
-        setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Лабораторная работа№3");
+
+        addBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        addBtn.setText("Добавить");
+        addBtn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+        addBtn.setName(""); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel2.setText("Информация о зданиях:");
+
+        editBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        editBtn.setText("Редактировать");
+        editBtn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+
+        tallestBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        tallestBtn.setText("Самое высокое");
+        tallestBtn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+        tallestBtn.addActionListener(this::tallestBtnActionPerformed);
+
+        showAllBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        showAllBtn.setText("Показать все");
+        showAllBtn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+
+        above50Btn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        above50Btn.setText("Здания выше 50");
+        above50Btn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+
+        sortBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        sortBtn.setText("Сортировка");
+        sortBtn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+
+        searchBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        searchBtn.setText("Поиск");
+        searchBtn.setMargin(new java.awt.Insets(2, 9, 2, 9));
+
+        buildingList.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(buildingList);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setText("Список зданий:");
+
+        outputArea.setEditable(false);
+        outputArea.setColumns(20);
+        outputArea.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        outputArea.setRows(5);
+        jScrollPane2.setViewportView(outputArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(287, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(286, 286, 286))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sortBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(showAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(above50Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tallestBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane1)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(jLabel1)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(550, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBtn)
+                            .addComponent(editBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(showAllBtn)
+                            .addComponent(above50Btn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tallestBtn)
+                            .addComponent(sortBtn))
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tallestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tallestBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tallestBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,6 +194,19 @@ public class mainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton above50Btn;
+    private javax.swing.JButton addBtn;
+    private javax.swing.JList<String> buildingList;
+    private javax.swing.JButton editBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea outputArea;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JButton showAllBtn;
+    private javax.swing.JButton sortBtn;
+    private javax.swing.JButton tallestBtn;
     // End of variables declaration//GEN-END:variables
 }
