@@ -62,38 +62,25 @@ public class Building {
              + " | высота: " + height + " м"
              + " | адрес: " + location;
     }
-
-    public String getShortInfo() {
-        return name + " (" + category + ", " + height + " м)";
-    }
-    
-    
-    
-        // ============================================================
+    // ============================================================
     // ПРЕДЗАПОЛНЕНИЕ: 5 зданий при старте программы
     // Выполняется один раз при загрузке класса Building
     // ============================================================
+        public String getShortInfo() {
+        return name + " (" + category + ", " + height + " м)";
+    }
+
+    // статический блок — сработает при первом обращении к Building
     static {
-        // ---- 3 жилых ----
-        addBuilding(new HomeBuilding(
-                "ЖК Солнечный", "ул. Ленина, 15", 45.5,
-                120, 340, true));
-
-        addBuilding(new HomeBuilding(
-                "Дом на Мира", "пр. Мира, 8", 32.0,
-                80, 210, false));
-
-        addBuilding(new HomeBuilding(
-                "ЖК Небесный", "ул. Космонавтов, 42", 78.3,
-                250, 620, true));
-
-        // ---- 2 офисных ----
-        addBuilding(new OfficeBuilding(
-                "БЦ Москва-Сити", "Пресненская наб., 8", 374.0,
-                350, true, 12));
-
-        addBuilding(new OfficeBuilding(
-                "Бизнес-центр Гарант", "ул. Гагарина, 3", 56.7,
-                95, false, 4));
+        addBuilding(new HomeBuilding("ЖК Солнечный", "ул. Ленина, 15",
+                45.5, 120, 340, true));
+        addBuilding(new HomeBuilding("Дом на Мира", "пр. Мира, 8",
+                32.0, 80, 210, false));
+        addBuilding(new HomeBuilding("ЖК Небесный", "ул. Космонавтов, 42",
+                78.3, 250, 620, true));
+        addBuilding(new OfficeBuilding("БЦ Москва-Сити", "Пресненская наб., 8",
+                374.0, 350, true, 12));
+        addBuilding(new OfficeBuilding("Бизнес-центр Гарант", "ул. Гагарина, 3",
+                56.7, 95, false, 4));
     }
 }

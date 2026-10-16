@@ -22,8 +22,16 @@ public class mainJFrame extends javax.swing.JFrame {
     public mainJFrame() {
         initComponents();
         initActions();
+        refreshList();
         
     }
+    private void refreshList() {
+    DefaultListModel<String> model = new DefaultListModel<>();
+    for (Building b : Building.allBuildings) {
+        model.addElement(b.getShortInfo());
+    }
+    buildingList.setModel(model);
+}
     /** Подключение всех кнопок к обработчикам */
     private void initActions() {
         addBtn.addActionListener(this::addBtnActionPerformed);
@@ -277,11 +285,7 @@ private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
     outputArea.setText(found ? sb.toString() : "Ничего не найдено.");
 }
 
-private void refreshList() {
-    DefaultListModel<String> model = new DefaultListModel<>();
-    for (Building b : Building.allBuildings) model.addElement(b.getShortInfo());
-    buildingList.setModel(model);
-}
+
     /**
      * @param args the command line arguments
      */
