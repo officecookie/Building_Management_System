@@ -1,4 +1,7 @@
 package buildingmanagementsystem;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,8 +21,19 @@ public class mainJFrame extends javax.swing.JFrame {
      */
     public mainJFrame() {
         initComponents();
+        initActions();
+        
     }
-
+    /** Подключение всех кнопок к обработчикам */
+    private void initActions() {
+        addBtn.addActionListener(this::addBtnActionPerformed);
+        editBtn.addActionListener(this::editBtnActionPerformed);
+        showAllBtn.addActionListener(this::showAllBtnActionPerformed);
+        sortBtn.addActionListener(this::sortBtnActionPerformed);
+        above50Btn.addActionListener(this::above50BtnActionPerformed);
+        searchBtn.addActionListener(this::searchBtnActionPerformed);
+        // tallestBtn уже привязан в initComponents() — второй раз не надо
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,8 +180,108 @@ public class mainJFrame extends javax.swing.JFrame {
 
     private void tallestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tallestBtnActionPerformed
         // TODO add your handling code here:
+        Building t = OfficeBuilding.getTallest();
+    outputArea.setText(t == null
+            ? "Список зданий пуст."
+            : "=== Самое высокое здание ===\n\n" + t.getInfo());
     }//GEN-LAST:event_tallestBtnActionPerformed
+private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    String[] types = {"Жилое", "Офисное"};
+    int type = JOptionPane.showOptionDialog(this, "Тип здания:", "Добавление",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+            null, types, types[0]);
+    if (type == -1) return;
 
+    try {
+        String name = JOptionPane.showInputDialog(this, "Название:");
+        if (name == null || name.isBlank()) return;
+        String loc = JOptionPane.showInputDialog(this, "Местоположение:");
+        if (loc == null || loc.isBlank()) return;
+        double h = Double.parseDouble(JOptionPane.showInputDialog(this, "Высота (м):"));
+
+        if (type == 0) {
+            int apt = Integer.parseInt(JOptionPane.showInputDialog(this, "Квартир:"));
+            int res = Integer.parseInt(JOptionPane.showInputDialog(this, "Жильцов:"));
+            boolean pg = JOptionPane.showConfirmDialog(this, "Детская площадка?",
+                    "Площадка", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+
+            Building.addBuilding(new HomeBuilding(name, loc, h, apt, res, pg));
+        } else {
+            int off = Integer.parseInt(JOptionPane.showInputDialog(this, "Офисов:"));
+            boolean pk = JOptionPane.showConfirmDialog(this, "Паркинг?",
+                    "Паркинг", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            int st = Integer.parseInt(JOptionPane.showInputDialog(this, "Гос. предприятий:"));
+
+            Building.addBuilding(new OfficeBuilding(name, loc, h, off, pk, st));
+        }
+        refreshList();
+        outputArea.setText("Здание добавлено. Всего: " + Building.allBuildings.size());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Некорректный ввод!");
+    }
+}
+
+private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    if (Building.allBuildings.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Список пуст!");
+        return;
+    }
+    try {
+        int idx = Integer.parseInt(JOptionPane.showInputDialog(this,
+                "Номер здания (1.." + Building.allBuildings.size() + "):")) - 1;
+
+        String field = JOptionPane.showInputDialog(this,
+                "Поле (название / местоположение / высота / категория /\n" +
+                "квартиры / жильцы / площадка /\nофисы / паркинг / предприятия):");
+        if (field == null) return;
+        String value = JOptionPane.showInputDialog(this, "Новое значение:");
+        if (value == null) return;
+
+        boolean ok = Building.editField(idx, field, value);
+        if (ok) {
+            refreshList();
+            outputArea.setText("Поле \"" + field + "\" обновлено.");
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Не удалось изменить (проверьте номер / имя поля / значение).");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Некорректный ввод!");
+    }
+}
+
+private void showAllBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    outputArea.setText(HomeBuilding.showAll());
+}
+
+private void sortBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    outputArea.setText(HomeBuilding.sortByHeight());
+}
+
+private void above50BtnActionPerformed(java.awt.event.ActionEvent evt) {
+    outputArea.setText(OfficeBuilding.showAbove50());
+}
+
+private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    String q = JOptionPane.showInputDialog(this, "Название для поиска:");
+    if (q == null || q.isBlank()) return;
+
+    StringBuilder sb = new StringBuilder("=== Поиск: \"" + q + "\" ===\n\n");
+    boolean found = false;
+    for (Building b : Building.allBuildings) {
+        if (b.getName().toLowerCase().contains(q.toLowerCase())) {
+            sb.append(b.getInfo()).append("\n\n");
+            found = true;
+        }
+    }
+    outputArea.setText(found ? sb.toString() : "Ничего не найдено.");
+}
+
+private void refreshList() {
+    DefaultListModel<String> model = new DefaultListModel<>();
+    for (Building b : Building.allBuildings) model.addElement(b.getShortInfo());
+    buildingList.setModel(model);
+}
     /**
      * @param args the command line arguments
      */
